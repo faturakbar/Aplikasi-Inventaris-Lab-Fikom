@@ -1,5 +1,3 @@
-
-   
    <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
@@ -14,7 +12,7 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="index.php">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
@@ -27,17 +25,36 @@
         Menu Utama
       </div>
 
-      <!-- Nav Item - Pages Collapse Menu -->
+      <!-- Nav Item - Pages Data Master Menu -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-cog"></i>
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#datamaster" aria-expanded="true" aria-controls="collapseTwo">
+          <i class="fas fa-fw fa-database"></i>
           <span>Data Master</span>
         </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="datamaster" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
           <h6 class="collapse-header">Data Master:</h6>
-          <a class="collapse-item" href="data_jenis.php">Data Jenis Barang</a>
-          
+          <a class="collapse-item" href="data_jenis.php">Data Jenis Barang</a>    
+          <a class="collapse-item" href="data_sumber.php">Data Sumber</a>
+          <a class="collapse-item" href="data_ruangan.php">Data Ruangan</a>     
+          </div>
+        </div>
+      </li>    
+      
+       <!-- Nav Item - Pages Data Transaksi Menu -->
+       <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#datatransaksi" aria-expanded="true" aria-controls="collapseTwo">
+          <i class="fas fa-fw fa-list"></i>
+          <span>Data Transaksi</span>
+        </a>
+        <div id="datatransaksi" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+          <h6 class="collapse-header">Data Transaksi:</h6>
+          <a class="collapse-item" href="data_barang.php">Data Barang</a>    
+          <a class="collapse-item" href="data_sumber.php">Data Detail Barang</a>
+          <a class="collapse-item" href="data_ruangan.php">Data Mutasi Barang</a>    
+          <a class="collapse-item" href="data_ruangan.php">Data Pemutihan</a>    
+
           </div>
         </div>
       </li>    

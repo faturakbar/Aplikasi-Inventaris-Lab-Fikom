@@ -1,25 +1,27 @@
 <?php 
 require 'functions.php';
 
+
 // ambil data di URL 
-$kode_jenis = $_GET['kode_jenis'];
+$kode_barang = $_GET['kode_barang'];
 //query data 
-$jenis =tampil_data ("SELECT * FROM jenis_barang WHERE kode_jenis = '$kode_jenis'") [0];	
+$barang =tampil_data ("SELECT * FROM barang JOIN jenis_barang ON barang.kode_jenis = jenis_barang.kode_jenis
+                       JOIN sumber ON barang.kode_sumber = sumber.kode_sumber  WHERE kode_barang = '$kode_barang'") [0];	
 
 
 // cek apakah tombol submit sudah ditekan atau belum
 if (isset($_POST["ubah"])) {
 
     // cek apakah berhasil di ubah atau tidak
-   if (ubah ($_POST) > 0) {
+   if (ubah_barang ($_POST) > 0) {
        echo "<script> 
                alert('Data Berhasil Diubah!');
-               document.location.href='data_jenis.php';
+               document.location.href='data_barang.php';
            </script>";	
    } else {
        echo "<script> 
                alert('Data Gagal Diubah!');
-               document.location.href='data_jenis.php';
+               document.location.href='data_barang.php';
            </script>";	
    }
     
@@ -89,33 +91,86 @@ if (isset($_POST["ubah"])) {
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800"> Jenis Barang</h1>
+          <h1 class="h3 mb-2 text-gray-800">Data Barang</h1>
          
 
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Ubah Jenis Barang</h6>
+              <h6 class="m-0 font-weight-bold text-primary">Ubah Barang</h6>
             </div>
 
               <!-- form start -->
               <form action="" method="post" >
                 <div class="card-body">
-                  <div class="form-group">
+                <div class="form-group">               
+                    <label for="kode_barang">Kode Barang</label>
+                    <input type="text"  name="kode_barang" class="form-control" id="kode_barang" placeholder="Masukkan Kode Barang"  value="<?=$barang["kode_barang"];?>" readonly>
+                </div>       
+                <div class="form-group">               
                     <label for="jenis_barang">Jenis Barang</label>
-                    <input type="hidden" value="<?= $jenis["kode_jenis"]; ?>" name="kode_jenis">
-                    <input type="text" class="form-control" id="jenis_barang" name="jenis_barang" value="<?= $jenis["jenis_barang"]; ?>" >
-                  </div>           
-                
-                <!-- /.card-body -->               
+                    <select name="jenis_barang" id="jenis_barang" class="form-control" required="required">
+                       <?php
+                       $jenis_barang=tampil_data ("SELECT * FROM jenis_barang");	  
+                       foreach ($jenis_barang as $data) :
+                                if ($barang['kode_jenis']==$data['kode_jenis']) {
+                                    $select="selected";
+                                    }else{
+                                    $select="";
+                                    }
+                                    ?>
+                        <option value="<?= $data['kode_jenis'];?>"
+                        <?= $select;?>><?= $data['jenis_barang'];?></option>
+                        <?php  endforeach; ?>
+                    </select>                  
+                </div>  
+                <div class="form-group">               
+                    <label for="sumber">Sumber</label>
+                    <select name="sumber" id= "sumber" class="form-control">
+                    <?php
+                       $sumber=tampil_data ("SELECT * FROM sumber");	  
+                       foreach ($sumber as $data) :
+                                if ($barang['kode_sumber']==$data['kode_sumber']) {
+                                    $select="selected";
+                                    }else{
+                                    $select="";
+                                    }
+                                    ?>
+                        <option value="<?= $data['kode_sumber'];?>"
+                        <?= $select;?>><?= $data['sumber'];?></option>
+                        <?php  endforeach; ?>
+                    </select>
+                </div>        
+                <div class="form-group">               
+                    <label for="nama_barang">Nama Barang</label>
+                    <input type="text"  name="nama_barang" class="form-control" id="nama_barang" placeholder="Masukkan Nama Barang" required="required" value="<?= $barang["nama_barang"]; ?>" >
+                </div>    
+                <div class="form-group">               
+                    <label for="tgl_pengadan">Tanggal Pengadaan</label>
+                    <input type="date"   name="tgl_pengadaan" class="form-control" id="tgl_pengadaan" required="required" value="<?=$barang["tgl_pengadaan"];?>" >                     
+                </div>    
+                <div class="form-group">               
+                    <label for="jumlah">Jumlah</label>
+                    <input type="number"  name="jumlah" class="form-control" id="jumlah"  required="required" value="<?= $barang["jumlah"]; ?>" >
+                </div>
+                <div class="form-group">               
+                    <label for="Satuan">Satuan</label>
+                    <select name="satuan" id="" class="form-control" required="required">
+                    <?php
+                        if ($barang['satuan']=='BUAH') echo "<option value='BUAH' selected>BUAH</option>";
+                        else echo "<option value='BUAH'>BUAH</option>";  
+                        if ($barang['satuan']=='DOS') echo "<option value='DOS' selected>DOS</option>";
+                        else echo "<option value='DOS'>DOS</option>";  
+                        if ($barang['satuan']=='RIM') echo "<option value='RIM' selected>RIM</option>";
+                        else echo "<option value='RIM'>RIM</option>";  
+                    ?> 
+                    </select>
+                </div>  
+               <!-- /.card-body -->               
                   <button type="submit" name="ubah" class="btn btn-primary">Ubah</button>
-                  <a  href="data_jenis.php" name="close" class="btn btn-secondary">Close</a>
+                  <a  href="data_barang.php" name="close" class="btn btn-secondary">Close</a>
                
-              </form>
-
-
-
-           
+              </form>     
 
               </div>
 

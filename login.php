@@ -1,3 +1,66 @@
+<?php 
+session_start();
+require 'functions.php';
+
+// cek cookie 
+if (isset($_COOKIE['id']) && isset($_COOKIE['key'])) {
+	$id = $_COOKIE['id'];
+	$key = $_COOKIE['key'];
+
+	// ambil username berdasarkan id 
+	$result = mysqli_query($conn, "SELECT username from user WHERE kode_user = $id");
+	$row = mysqli_fetch_assoc($result);
+
+
+	// cek cookie dan username 
+	if ($key === hash('sha256', $row['username'])) {
+		 $_SESSION['login'] = true;
+	}
+	
+}
+
+if (isset($_SESSION["login"])) {
+	 header("Location: index.php");
+	exit;
+}
+
+// cek apakah tombol submit sudah ditekan atau belum 
+if (isset($_POST['login'])) {
+	$username =$_POST['username'];
+  $password =$_POST['password']; 
+ 
+  $result =mysqli_query($conn, "SELECT * FROM user WHERE username ='$username'");
+ 
+ 
+	if (mysqli_num_rows($result) === 1) {	 
+		// cek password 
+		$row = mysqli_fetch_assoc($result);
+		if (password_verify($password, $row['password'])) {
+			// set session 
+      $_SESSION["login"]= true;
+      // cek remember me 
+			if (isset ($_POST['remember'])) {
+				// buat cookie
+				setcookie('id', $row['kode_user'], time()+60);
+				setcookie('key', hash('sha256', $row['username']), time()+60);
+      }
+      		header("Location: index.php");
+			exit;
+		}	
+	}
+  $error = true;
+  
+ 
+}
+
+ 
+ ?>
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +72,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>SB Admin 2 - Login</title>
+  <title>Aplikasi Inventaris Barang Lab FIKOM USTJ</title>
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -18,10 +81,17 @@
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
+  <style>
+
+    #remember {
+      margin-left:-18px;
+    }
+
+  </style>
 </head>
 
 <body class="bg-gradient-primary">
-
+<br><br>
   <div class="container">
 
     <!-- Outer Row -->
@@ -37,31 +107,29 @@
               <div class="col-lg-6">
                 <div class="p-5">
                   <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                  <?php if (isset($error)) : ?>
+                  <p>Username Atau Password Salah !!</p>
+                  <?php endif; ?>
+                    <h1 class="h4 text-gray-900 mb-4">Selamat Datang</h1>
                   </div>
-                  <form class="user">
+                  <form class="user" method="post" action="">
                     <div class="form-group">
-                      <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                      <input type="text" class="form-control form-control-user" id="username" name="username" aria-describedby="emailHelp" placeholder="Username">
                     </div>
                     <div class="form-group">
-                      <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
+                      <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Password">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" style="margin-left: 3px; " >
                       <div class="custom-control custom-checkbox small">
-                        <input type="checkbox" class="custom-control-input" id="customCheck">
-                        <label class="custom-control-label" for="customCheck">Remember Me</label>
+                        <input type="checkbox"   id="remember" name="remember"  >
+                        <label  for="customCheck">Remember Me</label>
                       </div>
                     </div>
-                    <a href="index.html" class="btn btn-primary btn-user btn-block">
+                    <button class="btn btn-primary btn-user btn-block" type="submit" name="login">
                       Login
-                    </a>
-                    <hr>
-                    <a href="index.html" class="btn btn-google btn-user btn-block">
-                      <i class="fab fa-google fa-fw"></i> Login with Google
-                    </a>
-                    <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                      <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-                    </a>
+                    </button>
+                  
+                  
                   </form>
                   <hr>
                   <div class="text-center">

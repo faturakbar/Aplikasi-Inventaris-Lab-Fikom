@@ -2,24 +2,24 @@
 require 'functions.php';
 
 // ambil data di URL 
-$kode_jenis = $_GET['kode_jenis'];
+$kode_sumber = $_GET['kode_sumber'];
 //query data 
-$jenis =tampil_data ("SELECT * FROM jenis_barang WHERE kode_jenis = '$kode_jenis'") [0];	
+$sumber =tampil_data ("SELECT * FROM sumber WHERE kode_sumber = '$kode_sumber'") [0];	
 
 
 // cek apakah tombol submit sudah ditekan atau belum
 if (isset($_POST["ubah"])) {
 
     // cek apakah berhasil di ubah atau tidak
-   if (ubah ($_POST) > 0) {
+   if (ubah_Sumber ($_POST) > 0) {
        echo "<script> 
                alert('Data Berhasil Diubah!');
-               document.location.href='data_jenis.php';
+               document.location.href='data_sumber.php';
            </script>";	
    } else {
        echo "<script> 
                alert('Data Gagal Diubah!');
-               document.location.href='data_jenis.php';
+               document.location.href='data_sumber.php';
            </script>";	
    }
     
@@ -89,27 +89,27 @@ if (isset($_POST["ubah"])) {
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800"> Jenis Barang</h1>
+          <h1 class="h3 mb-2 text-gray-800"> Sumber Barang</h1>
          
 
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Ubah Jenis Barang</h6>
+              <h6 class="m-0 font-weight-bold text-primary">Ubah Sumber Barang</h6>
             </div>
 
               <!-- form start -->
               <form action="" method="post" >
                 <div class="card-body">
                   <div class="form-group">
-                    <label for="jenis_barang">Jenis Barang</label>
-                    <input type="hidden" value="<?= $jenis["kode_jenis"]; ?>" name="kode_jenis">
-                    <input type="text" class="form-control" id="jenis_barang" name="jenis_barang" value="<?= $jenis["jenis_barang"]; ?>" >
+                    <label for="sumber_barang">sumber Barang</label>
+                    <input type="hidden" id="sumber_barang" value="<?= $sumber["kode_sumber"]; ?>" name="kode_sumber">
+                    <input type="text" class="form-control" id="jenis_barang" name="sumber" value="<?= $sumber["sumber"]; ?>" >
                   </div>           
                 
-                <!-- /.card-body -->               
+                <!-- /.card-body -->              
                   <button type="submit" name="ubah" class="btn btn-primary">Ubah</button>
-                  <a  href="data_jenis.php" name="close" class="btn btn-secondary">Close</a>
+                  <a  href="data_sumber.php" name="close" class="btn btn-secondary">Close</a>
                
               </form>
 
