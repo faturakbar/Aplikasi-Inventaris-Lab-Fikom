@@ -1,11 +1,9 @@
+  
+   
+   
    <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-      <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
-        
-        <h6>Aplikasi Inventaris Barang  </h6>
-      </a>
 
       <!-- Divider -->
       <hr class="sidebar-divider my-0">
@@ -26,6 +24,10 @@
       </div>
 
       <!-- Nav Item - Pages Data Master Menu -->
+      <?php 
+      $level = $_SESSION['level'];
+      
+      if($level == "admin") :?>   
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#datamaster" aria-expanded="true" aria-controls="collapseTwo">
           <i class="fas fa-fw fa-database"></i>
@@ -51,16 +53,57 @@
           <div class="bg-white py-2 collapse-inner rounded">
           <h6 class="collapse-header">Data Transaksi:</h6>
           <a class="collapse-item" href="data_barang.php">Data Barang</a>    
-          <a class="collapse-item" href="data_sumber.php">Data Detail Barang</a>
-          <a class="collapse-item" href="data_ruangan.php">Data Mutasi Barang</a>    
-          <a class="collapse-item" href="data_ruangan.php">Data Pemutihan</a>    
+          <a class="collapse-item" href="data_detail.php">Data Detail Barang</a>
+          <a class="collapse-item" href="data_mutasi.php">Data Mutasi Barang</a>    
+          <a class="collapse-item" href="data_pemutihan.php">Data Pemutihan</a>    
 
           </div>
         </div>
       </li>    
-    
+      <?php endif; ?>
+      <?php 
+      $level = $_SESSION['level'];
+      if($level == "kepala"):?>        
+      
+       <!-- Nav Item - Pages Data Transaksi Menu -->
+       <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#datatransaksi" aria-expanded="true" aria-controls="collapseTwo">
+          <i class="fas fa-fw fa-list"></i>
+          <span>Data Transaksi</span>
+        </a>
+        <div id="datatransaksi" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+          <h6 class="collapse-header">Data Transaksi:</h6>
+          <a class="collapse-item" href="data_barang.php">Data Barang</a>    
+          <a class="collapse-item" href="data_detail.php">Data Detail Barang</a>
+          <a class="collapse-item" href="data_mutasi.php">Data Mutasi Barang</a>    
+          <a class="collapse-item" href="data_pemutihan.php">Data Pemutihan</a>    
+
+          </div>
+        </div>
+      </li>    
+      <?php endif; ?>
+
+
+
+
+
+      
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
+          <!-- Heading -->
+          <div class="sidebar-heading">
+        Logout
+      </div>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="modal" data-target="#logoutModal"  aria-expanded="true" aria-controls="collapseTwo">
+          <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2  "></i>
+          <span>Logout</span>
+        </a>
+      </li>
+
+
+
 
       <!-- Sidebar Toggler (Sidebar) -->
       <div class="text-center d-none d-md-inline">

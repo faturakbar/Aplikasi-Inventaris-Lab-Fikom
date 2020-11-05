@@ -1,7 +1,7 @@
 <?php 
  require 'functions.php';
  
-	echo "<option value=''>Pilih Jenis Barang</option>";  
+ echo "<option value=''>Pilih Jenis Barang</option>";  
         //Perintah sql untuk menampilkan semua data pada tabel Jenis Barang
         $jenis_barang=tampil_data ("SELECT * FROM jenis_barang");	
          foreach ($jenis_barang as $data ) {      

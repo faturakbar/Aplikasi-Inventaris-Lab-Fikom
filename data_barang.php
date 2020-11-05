@@ -45,6 +45,8 @@ if (isset($_POST["submit"])) {
   <meta name="author" content="">
 
   <title>Aplikasi Inventaris Barang Lab FIKOM USTJ</title
+  
+
 
   <!-- Custom fonts for this template -->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -61,6 +63,9 @@ if (isset($_POST["submit"])) {
 
 <body id="page-top">
 
+ 
+
+
 <?php 
 // kode jenis barang  
 $id = id ("SELECT max(kode_barang) as kodeTerbesar FROM barang"); 
@@ -73,6 +78,7 @@ $kodeBarang = $huruf . sprintf("%03s", $urutan);
 
 
 ?>
+
 
 <!-- Page Wrapper -->
   <div id="wrapper">
@@ -118,7 +124,10 @@ $kodeBarang = $huruf . sprintf("%03s", $urutan);
             </div>
           
             <div class="card-body">
-            <div class="card-header  ">               
+            <?php 
+              $level = $_SESSION['level'];
+              if($level == "admin") :?>  
+               <div class="card-header  ">      
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-lg">
                  Tambah Data Barang
                 </button>
@@ -137,7 +146,7 @@ $kodeBarang = $huruf . sprintf("%03s", $urutan);
                 <div class="card-body">      
                  <div class="form-group">               
                     <label for="kode_barang">Kode Barang</label>
-                    <input type="text"  name="kode_barang" class="form-control" id="kode_barang" placeholder="Masukkan Kode Barang"  value="<?= $kodeBarang; ?>">
+                    <input type="text"  name="kode_barang" class="form-control" id="kode_barang" placeholder="Masukkan Kode Barang"  value="<?= $kodeBarang; ?>" readonly>
                 </div>       
                 <div class="form-group">               
                     <label for="jenis_barang">Jenis Barang</label>
@@ -159,8 +168,8 @@ $kodeBarang = $huruf . sprintf("%03s", $urutan);
                     <input type="date" name="tgl_pengadaan" class="tm form-control" id="tgl_pengadaan" required="required">                     
                     </div>    
                 <div class="form-group">               
-                    <label for="jumlah">Jumlah</label>
-                    <input type="number"  name="jumlah" class="form-control" id="jumlah"  required="required" >
+                    <label for="jumlah_barang">Jumlah Barang</label>
+                    <input type="number"  name="jumlah_barang" class="form-control" id="jumlah_barang"  required="required" >
                 </div>
                 <div class="form-group">               
                     <label for="Satuan">Satuan</label>
@@ -180,9 +189,11 @@ $kodeBarang = $huruf . sprintf("%03s", $urutan);
                   </div>
                   <!-- /.modal-dialog -->
                 </div>
+             
                 <!-- /.modal -->
               </div>
               <br>  
+              <?php endif; ?>
               <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" >
                   <thead > 
@@ -193,9 +204,13 @@ $kodeBarang = $huruf . sprintf("%03s", $urutan);
                       <th>Jenis Barang</th>
                       <th>Sumber</th>                      
                       <th >Tanggal Pengadaan</th>
-                      <th >Jumlah</th>
+                      <th >Jumlah Barang</th>
                       <th>Satuan</th>
-                      <th>Aksi</th>             
+                      <?php 
+                      $level = $_SESSION['level'];
+                      if($level == "admin") :?>                        
+                      <th>Aksi</th>   
+                      <?php endif; ?>          
                     </tr>                    
                   </thead>
              
@@ -209,12 +224,16 @@ $kodeBarang = $huruf . sprintf("%03s", $urutan);
                       <td><?= $bar["jenis_barang"];?> </td>  
                       <td><?= $bar["sumber"];?> </td>  
                       <td ><?= tgl_indo($bar["tgl_pengadaan"]);?> </td>                          
-                      <td ><?= $bar["jumlah"];?> </td>
+                      <td ><?= $bar["jumlah_barang"];?> </td>
                       <td><?= $bar["satuan"];?> </td>
+                      <?php 
+                      $level = $_SESSION['level'];
+                      if($level == "admin") :?>  
                       <td width="13%">
                       <a class="fas fa-edit btn btn-success " href="ubah_barang.php?kode_barang=<?php echo $bar['kode_barang']; ?>" data-toggle="tooltip" data-placement="top" title="Edit data barang"></a>
                       <a onclick="return confirm('Yakin ingin menghapus data ini')" href="hapus_barang.php?kode_barang=<?php echo $bar['kode_barang']; ?>" class="fas fa-trash-alt btn btn-danger"title="Hapus Data Barang"></a>
-                      </td>              
+                      </td>            
+                      <?php endif; ?>  
                     </tr>
                     <?php $i++ ?>
                     <?php endforeach; ?>

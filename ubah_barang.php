@@ -1,4 +1,10 @@
 <?php 
+session_start();
+if (!isset($_SESSION["login"])) {
+	header("Location: login.php");
+	exit;
+} 
+
 require 'functions.php';
 
 
@@ -150,8 +156,8 @@ if (isset($_POST["ubah"])) {
                     <input type="date"   name="tgl_pengadaan" class="form-control" id="tgl_pengadaan" required="required" value="<?=$barang["tgl_pengadaan"];?>" >                     
                 </div>    
                 <div class="form-group">               
-                    <label for="jumlah">Jumlah</label>
-                    <input type="number"  name="jumlah" class="form-control" id="jumlah"  required="required" value="<?= $barang["jumlah"]; ?>" >
+                    <label for="jumlah_barang">Jumlah BARANG</label>
+                    <input type="number"  name="jumlah_barang" class="form-control" id="jumlah_barang"  required="required" value="<?= $barang["jumlah_barang"]; ?>" >
                 </div>
                 <div class="form-group">               
                     <label for="Satuan">Satuan</label>

@@ -5,7 +5,9 @@ require 'functions.php';
 // cek cookie 
 if (isset($_COOKIE['id']) && isset($_COOKIE['key'])) {
 	$id = $_COOKIE['id'];
-	$key = $_COOKIE['key'];
+  $key = $_COOKIE['key'];
+  
+ 
 
 	// ambil username berdasarkan id 
 	$result = mysqli_query($conn, "SELECT username from user WHERE kode_user = $id");
@@ -28,6 +30,8 @@ if (isset($_SESSION["login"])) {
 if (isset($_POST['login'])) {
 	$username =$_POST['username'];
   $password =$_POST['password']; 
+
+ 
  
   $result =mysqli_query($conn, "SELECT * FROM user WHERE username ='$username'");
  
@@ -37,7 +41,14 @@ if (isset($_POST['login'])) {
 		$row = mysqli_fetch_assoc($result);
 		if (password_verify($password, $row['password'])) {
 			// set session 
+     
+      $_SESSION['kode_user']   = $row['kode_user'];
+      $_SESSION['username']   = $row['username'];
+      $_SESSION['password']   = $row['password'];
+      $_SESSION['level']   = $row['level'];
       $_SESSION["login"]= true;
+
+
       // cek remember me 
 			if (isset ($_POST['remember'])) {
 				// buat cookie
@@ -86,7 +97,9 @@ if (isset($_POST['login'])) {
     #remember {
       margin-left:-18px;
     }
-
+    p{
+      color: red;
+    }
   </style>
 </head>
 
@@ -103,7 +116,9 @@ if (isset($_POST['login'])) {
           <div class="card-body p-0">
             <!-- Nested Row within Card Body -->
             <div class="row">
-              <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+              <div class="col-lg-6 d-none d-lg-block">
+                <img src="img/login.jpg"  style="width:110%;  ">
+              </div>
               <div class="col-lg-6">
                 <div class="p-5">
                   <div class="text-center">
@@ -121,7 +136,7 @@ if (isset($_POST['login'])) {
                     </div>
                     <div class="form-group" style="margin-left: 3px; " >
                       <div class="custom-control custom-checkbox small">
-                        <input type="checkbox"   id="remember" name="remember"  >
+                        <input type="checkbox"   id="remember"   >
                         <label  for="customCheck">Remember Me</label>
                       </div>
                     </div>

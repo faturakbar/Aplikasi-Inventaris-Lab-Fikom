@@ -4,6 +4,10 @@ if (!isset($_SESSION["login"])) {
 	header("Location: login.php");
 	exit;
 } 
+if ($_SESSION['level']=="kepala") {
+  header("Location: index.php");
+	exit;
+}
 require 'functions.php';
 
 $jenis_barang=tampil_data ("SELECT * FROM jenis_barang");	
